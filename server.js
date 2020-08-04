@@ -48,9 +48,8 @@ app.put('/products/:id',(req,res)=>{
 app.delete('/products/:id',(req,res)=>{ 
     for(let x in products){
         if(products[x].id===req.params.id){
-            let id= products[x].id;
             products.splice(x,1);
-            res.send(`deleted ${id}`);
+            res.send(`deleted ${req.params.id}`);
         }
     }
     console.log(products)
