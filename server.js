@@ -9,6 +9,13 @@ const products = [
         you:'killed my father',
         prepare:'to die',
 
+    },
+    {
+        id:'b',
+        name:'Westley',
+        dread:'pirate roberts',
+        prepare:'to die',
+
     }
 ]
 
@@ -39,12 +46,14 @@ app.put('/products/:id',(req,res)=>{
     
 })
 app.delete('/products/:id',(req,res)=>{ 
-    for(let x of products){
-        if(x.id===req.params.id){
-            delete x;
-            res.send(`deleted ${x.id}`);
+    for(let x in products){
+        if(products[x].id===req.params.id){
+            let id= products[x].id;
+            products.splice(x,1);
+            res.send(`deleted ${id}`);
         }
     }
+    console.log(products)
     
 })
 
