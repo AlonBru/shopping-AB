@@ -30,17 +30,18 @@ app.get('/products/:id',(req,res)=>{
         }
 })
 app.post('/products',(req,res)=>{
-    const barry = req.body 
+    const barry = req.body
+    if (berry=={})res.send('empty!');
     console.log(req.body)
     products.push(barry);
     res.send(barry);
 })
 app.put('/products/:id',(req,res)=>{
     const barry = req.body; 
-    for(let x of products){
-        if(x.id===req.params.id){
-            x=barry;
-            res.send(`updated ${x.id} with ${JSON.stringify(barry)}`);
+    for(let x in products){
+        if(products[x].id===req.params.id){
+            products.splice(x,1,barry);
+            res.send(`updated ${req.params.id} with ${JSON.stringify(barry)}`);
         }
     }
     
