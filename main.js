@@ -3,7 +3,7 @@
 const input = document.querySelector('#input_item');
 const addButton = document.querySelector('#add_button');
 const loadButton = document.querySelector('#load_button');
-const ol = document.querySelector('ol');
+const ol = document.querySelector('#itemList');
 let deleted = []
 // const data = axios.post('/products');
 
@@ -46,6 +46,17 @@ async function addItem() {
   loadButton.addEventListener("click",loaded)
 
   async function deleteItem(){
-      
+    try {
+        const response = await axios.delete('http://localhost:3000/products/:id');
+        const allItems= ol.childNodes;
+        const allDeleteButton=allItems.childNodes;
+        if(e.target === allItems.childNodes){
+            ol.removeChild(e.target)
+        }else{return};
+        console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   }
- 
+  
+ ol.addEventListener("click",deleteItem)
