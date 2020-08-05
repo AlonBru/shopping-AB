@@ -28,6 +28,7 @@ app.get('/products/:id',(req,res)=>{
         if(x.id === req.params.id) 
             res.send(x);
         }
+        res.send('no such item!')
 })
 app.post('/products',(req,res)=>{
     const barry = req.body
@@ -44,7 +45,7 @@ app.put('/products/:id',(req,res)=>{
             res.send(`updated ${req.params.id} with ${JSON.stringify(barry)}`);
         }
     }
-    
+    res.send('no such item!')
 })
 app.delete('/products/:id',(req,res)=>{ 
     for(let x in products){
@@ -52,6 +53,7 @@ app.delete('/products/:id',(req,res)=>{
             products.splice(x,1);
             res.send(`deleted ${req.params.id}`);
         }
+        res.send('no such item!')
     }
     console.log(products)
     
