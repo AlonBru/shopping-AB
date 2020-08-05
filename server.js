@@ -53,9 +53,8 @@ app.delete('/products/:id',(req,res)=>{
             products.splice(x,1);
             res.send(`deleted ${req.params.id}`);
         }
-        res.send('no such item!')
     }
-    console.log(products)
+    res.send('no such item!')
     
 })
 
