@@ -28,6 +28,7 @@ app.get('/products/:id',(req,res)=>{
         if(x.id === req.params.id) 
             res.send(x);
         }
+        res.send('no such item!')
 })
 app.post('/products',(req,res)=>{
     const barry = req.body
