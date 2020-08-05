@@ -2,20 +2,21 @@
 //call input ol and button from document
 const input = document.querySelector('#input_item');
 const addButton = document.querySelector('#add_button');
-const searchButton = document.querySelector('#load_button');
+const searchButton = document.querySelector('#search_button');
 const ol = document.querySelector('#itemList');
+const searchResultDiv = document.querySelector("#searchResult");
 let deleted = []
 // const data = axios.post('/products');
 
 async function addItem() {
     try {
-        const newProduct = input.value;
+        const newProduct = {id:input.value};
         let regex = /^\d*$/;
-        if(regex.test(newProduct)) throw('id canot be number or empty');
+        if(regex.test(newProduct.id)) throw('id canot be number or empty');
         const response = await axios.post('http://localhost:3000/products',newProduct);
         const item = document.createElement('li');
-        item.textContent = newProduct;
-        item.id='item';
+        item.textContent = newProduct.id;
+        item.className='item';
         const deleteButton = document.createElement('button');
         deleteButton.className="deleteButton";
         deleteButton.textContent = "delete"
@@ -32,9 +33,10 @@ async function addItem() {
     try {
         const response = await axios.get('http://localhost:3000/products');
         for(let x of response.data){
+          console.log(x);
         const item = document.createElement('li');
         item.textContent = x.id;
-        item.id = 'item';
+        item.className = 'item';
         const deleteButton = document.createElement('button');
         deleteButton.className="deleteButton";
         deleteButton.textContent = "delete"
@@ -75,14 +77,31 @@ async function addItem() {
 
 //  toChangeButton.addEventListener("click",change);
 
-//  async function search(){
-//   try{
-//    const searchProduct = input.value;
-//    const response = await axios.get(`http://localhost:3000/products/${searchProduct}`)
-//     console.error(error);
-//  } catch (error) {
-//   console.error(error);
-//   }
-// }
-// searchButton.addEventListener("click",search)
+ async function search(){
+  try{
+   const searchProduct = input.value;
+   const response = await axios.get(`http://localhost:3000/products/${searchProduct}`);
+   const divHaeder = document.createElement('p');
+   divHaeder.id = 'divHaeder';
+   divHaeder.textContent = 'result of the search';
+   const clearButton= document.createElement('button');
+   clearButton.id='clearButton';
+   clearButton.textContent = 'clear';
+   const seaerched= document.createElement('p');
+   seaerched.id='seaerched';
+   seaerched.textContent = searchProduct;
+   searchResultDiv.appendChild(divHaeder);
+   searchResultDiv.appendChild(seaerched);
+   searchResultDiv.appendChild(clearButton);
+   function removeSearch(){
+    searchResultDiv.removeChild(divHaeder);
+    searchResultDiv.removeChild(seaerched);
+    searchResultDiv.removeChild(clearButton);
+   }
+   clearButton.addEventListener("click",removeSearch);
+ } catch (error) {
+  console.error(error);
+  }
+}
+searchButton.addEventListener("click",search)
 
