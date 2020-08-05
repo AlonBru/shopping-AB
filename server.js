@@ -31,7 +31,7 @@ app.get('/products/:id',(req,res)=>{
 })
 app.post('/products',(req,res)=>{
     const barry = req.body
-    if (berry=={})res.send('empty!');
+    if (barry=={})res.send('empty!');
     console.log(req.body)
     products.push(barry);
     res.send(barry);
