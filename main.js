@@ -104,9 +104,9 @@ function creatCehangeBar(e){
   const changeButton = document.createElement('button');
   changeButton.className='changeButton'; 
   changeButton.textContent='change';
-  if(e.target.className === 'itemText'){
-  e.target.closest('label').appendChild(changeInput);
-  e.target.closest('label').appendChild(changeButton);
+  if(e.target.className === 'itemText' && !e.target.closest("label").childNodes[1]){
+    e.target.closest('label').appendChild(changeInput);
+    e.target.closest('label').appendChild(changeButton);
   }
    async function change(e){
     try{
