@@ -1,4 +1,3 @@
-// const axios= require('axios')
 //call input ol and button from document
 const input = document.querySelector('#input_item');
 const addButton = document.querySelector('#add_button');
@@ -15,11 +14,14 @@ async function addItem() {
         if(regex.test(newProduct.id)) throw('id canot be number or empty');
         const response = await axios.post('http://localhost:3000/products',newProduct);
         const item = document.createElement('li');
-        item.textContent = newProduct.id;
         item.className='item';
+        const itemText = document.createElement('label');
+        itemText.className='itemText'
+        itemText.textContent = newProduct.id;
         const deleteButton = document.createElement('button');
         deleteButton.className="deleteButton";
         deleteButton.textContent = "delete"
+        item.appendChild(itemText);
         item.appendChild(deleteButton);
         ol.appendChild(item);
         console.log(response);
@@ -35,11 +37,14 @@ async function addItem() {
         for(let x of response.data){
           console.log(x);
         const item = document.createElement('li');
-        item.textContent = x.id;
         item.className = 'item';
+        const itemText = document.createElement('label');
+        itemText.className='itemText'
+        itemText.textContent = x.id;
         const deleteButton = document.createElement('button');
         deleteButton.className="deleteButton";
         deleteButton.textContent = "delete"
+        item.appendChild(itemText);
         item.appendChild(deleteButton);
         ol.appendChild(item);
         }
@@ -54,7 +59,6 @@ async function addItem() {
   async function deleteItem(e){
     try {
         const allItems = e.target;
-        console.log(allItems);
         if(allItems.className === 'deleteButton'){
         const toDelete = e.target.closest('li').textContent.slice(0,-6);
         console.log(toDelete);
@@ -65,17 +69,6 @@ async function addItem() {
     }
   }
  ol.addEventListener("click",deleteItem);
-
-//  async function change(){
-//    try{
-//     const changeProduct = {id:toChange.value};
-//     const response = await axios.put('http://localhost:3000/products/:id',changeProduct); 
-//    }catch (error) {
-//     console.error(error);
-//   }
-//  }
-
-//  toChangeButton.addEventListener("click",change);
 
  async function search(){
   try{
@@ -104,4 +97,38 @@ async function addItem() {
   }
 }
 searchButton.addEventListener("click",search)
+
+function creatCehangeBar(e){
+  const changeInput = document.createElement('input');
+  changeInput.className='changeInput';
+  const changeButton = document.createElement('button');
+  changeButton.className='changeButton'; 
+  changeButton.textContent='change';
+  if(e.target.className === 'itemText'){
+  e.target.closest('label').appendChild(changeInput);
+  e.target.closest('label').appendChild(changeButton);
+  }
+   async function change(e){
+    try{
+      const toChange = e.target.closest('li').textContent.slice(0,-12);
+      const changeTo = {id: changeInput.value};
+      let regex = /^\d*$/;
+      if(regex.test(changeTo.id)) throw('id canot be number or empty');
+      const response = await axios.put(`http://localhost:3000/products/${toChange}`,changeTo);
+      console.log(response);
+      removeAllChildNodes(ol)
+      loaded()
+    }catch (error) {
+    console.error(error);
+  }
+ }
+ changeButton.addEventListener("click",change);
+}
+ol.addEventListener("click",creatCehangeBar);
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
 
