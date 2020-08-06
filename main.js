@@ -6,7 +6,6 @@ const ol = document.querySelector('#itemList');
 const searchResultDiv = document.querySelector("#searchResult");
 let deleted = []
 // const data = axios.post('/products');
-
 async function addItem() {
     try {
         const newProduct = {id:input.value};
@@ -109,7 +108,7 @@ function creatCehangeBar(e){
     e.target.closest('label').appendChild(changeButton);
   }
    async function change(e){
-    try{
+    try{ 
       const toChange = e.target.closest('li').textContent.slice(0,-12);
       const changeTo = {id: changeInput.value};
       let regex = /^\d*$/;
