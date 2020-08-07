@@ -23,6 +23,7 @@ async function addItem() {
         item.appendChild(itemText);
         item.appendChild(deleteButton);
         ol.appendChild(item);
+        input.value='';
         console.log(response);
     } catch (error) {
       console.error(error);
@@ -73,6 +74,7 @@ async function addItem() {
   try{
    const searchProduct = input.value;
    const response = await axios.get(`http://localhost:3000/products/${searchProduct}`);
+   console.log(response);
    const divHaeder = document.createElement('p');
    divHaeder.id = 'divHaeder';
    divHaeder.textContent = 'result of the search';
@@ -81,10 +83,13 @@ async function addItem() {
    clearButton.textContent = 'clear';
    const seaerched= document.createElement('p');
    seaerched.id='seaerched';
-   seaerched.textContent = searchProduct;
+   if(response.data.id){
+   seaerched.textContent = response.data.id;
+   }else{seaerched.textContent = response.data};
    searchResultDiv.appendChild(divHaeder);
    searchResultDiv.appendChild(seaerched);
    searchResultDiv.appendChild(clearButton);
+   input.value='';
    function removeSearch(){
     searchResultDiv.removeChild(divHaeder);
     searchResultDiv.removeChild(seaerched);
@@ -107,6 +112,7 @@ function creatCehangeBar(e){
     e.target.closest('label').appendChild(changeInput);
     e.target.closest('label').appendChild(changeButton);
   }
+
    async function change(e){
     try{ 
       const toChange = e.target.closest('li').textContent.slice(0,-12);
