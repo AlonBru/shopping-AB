@@ -1,10 +1,8 @@
-//call input ol and button from document
-const input = document.querySelector('#input_item');
+const input = document.querySelector('#input_item');   //CALL VARIABLE FROM DOCUMENT
 const addButton = document.querySelector('#add_button');
 const searchButton = document.querySelector('#search_button');
 const ol = document.querySelector('#itemList');
 const searchResultDiv = document.querySelector("#searchResult");
-let deleted = []
 
 async function addItem() { //ADD ITEM WITH POST METHOD
   try {
