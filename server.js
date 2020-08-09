@@ -2,22 +2,7 @@ const express = require('express');
 const app = express();
 
 app.use(express.json());
-const products = [
-    {
-        id:'a',
-        name:'Inigo Montoya',
-        you:'killed my father',
-        prepare:'to die',
-
-    },
-    {
-        id:'b',
-        name:'Westley',
-        dread:'pirate roberts',
-        prepare:'to die',
-
-    }
-]
+const products = []
 
 app.get('/products',(req,res)=>{
     res.send(products);
@@ -32,7 +17,7 @@ app.get('/products/:id',(req,res)=>{
 })
 app.post('/products',(req,res)=>{
     const barry = req.body
-    if (berry=={})res.send('empty!');
+    if (barry=={})res.send('empty!');
     console.log(req.body)
     products.push(barry);
     res.send(barry);
